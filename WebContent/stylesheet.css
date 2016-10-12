@@ -1,0 +1,17 @@
+th, td {
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 20px;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+    color: white;
+}
