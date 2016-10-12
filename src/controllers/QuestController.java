@@ -58,7 +58,7 @@ public class QuestController {
 
 	// Edit A Conquest
 	@RequestMapping(path = "quest/{id}", method = RequestMethod.PUT)
-	public Conquest update(@PathVariable int id, @RequestBody String jsonQuest) {
+	public void update(@PathVariable int id, @RequestBody String jsonQuest) {
 		ObjectMapper mapper = new ObjectMapper();
 		Conquest editQuest = null;
 
@@ -69,7 +69,6 @@ public class QuestController {
 		}
 
 		editQuest = questDAO.update(id, editQuest);
-		return editQuest;
 	}
 
 	// Delete A Conquest

@@ -154,22 +154,43 @@ var createQuest = function() {
       gold : $gold.val()
       };
 
-    var questString = JSON.stringify(quest);
-
-    $.ajax({
-      type: "POST",
-      url: "api/quest",
-      contentType: "application/json",
-      data: questString,
-      success: getQuests
-    }).fail(function(e){
-      console.log(e);
-      console.log('Post New Quest Failed!');
-    });
+    persistQuest(quest);    
   })
 
   $form.append($foe, $land, $tale, $gold, $br, $br1, $submit);
 
   $('#quest-form').append($h2);
   $('#quest-form').append($form);
+}
+
+// Add Quest to Database
+var persistQuest = function(quest) {
+  var questString = JSON.stringify(quest);
+
+  $.ajax({
+    type: "POST",
+    url: "api/quest",
+    contentType: "application/json",
+    data: questString,
+    success: getQuests
+  }).fail(function(e){
+    console.log(e);
+    console.log("Post New Quest Failed!");
+  });
+}
+
+// Update Quest in Database
+var updateQuest = function(quest) {
+  var questString = JSON.stringify(quest);
+
+  $.ajax({
+    type: "PUT",
+    url: "api/quest" + quest.id,
+    contentType: "application/json",
+    data: questString,
+    success: getQuests
+  }).fail(function(e){
+    console.log(e);
+    console.log("Update Quest Failed!");
+  });
 }
