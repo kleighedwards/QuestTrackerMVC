@@ -15,10 +15,27 @@ var getQuests = function() {
   });
 }
 
+// Gets Quest By ID and Show Additional Info
+// var getQuestByID = function(id) {
+//   $.ajax({
+//     type: "GET",
+//     url: "api/quest/" + id,
+//     dataType: "json",
+//     success: buildTable
+//   }).fail(function(e){
+//     console.log(e);
+//     console.log("Get Quest By ID Failed!");
+//   });
+// }
+
 var buildNavBar = function() {
   var $ul = $('<ul>');
   var $liTitle = $('<li>');
   $liTitle.text("Quest Tracker");
+  $liTitle.click(function(e) {
+    getQuests();
+  })
+
   var $liCreate = $('<li>');
   $liCreate.text("Add A New Quest");
 
@@ -69,6 +86,11 @@ var buildTable = function(data) {
       if (variable === "foe") {
         var $tdFoe = $('<td>');
         $tdFoe.text(quest[variable]);
+        $tdFoe.click(function(e) {
+          console.log("Show Quest Clicked For: " + quest.id);
+          showQuest(quest);
+        })
+
         $tr.append($tdFoe);
       }
       if (variable === "land") {
@@ -88,6 +110,7 @@ var buildTable = function(data) {
         $tr.append($tdGold);
       }
     }
+    // Create Edit Button For Each Quest
     var $tdEdit = $('<td>');
     $tdEdit.text("Revise");
 
@@ -126,6 +149,26 @@ var deleteQuest = function(quest) {
     console.log(status);
     console.log('Delete Quest Failed!');
   });
+}
+
+// Show Additional Info
+var showQuest = function(quest) {
+  $('#nav-bar').empty();
+  $('#data-table').empty();
+  $('#quest-form').empty();
+
+  buildNavBar();
+
+  var $h2 = $('<h2>');
+  $h2.text(quest.foe);
+
+  var $image = $('<img>');
+  $image.attr("src", quest.image);
+
+  var $p = $('<p>');
+  $p.text(quest.tale);
+
+  $('#data-table').append($h2, $image, $p);
 }
 
 // Create A Quest

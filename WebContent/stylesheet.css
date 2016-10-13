@@ -1,18 +1,39 @@
+table {
+  text-align: left;
+}
+
 th, td {
     border-bottom: 1px solid #ddd;
     padding: 10px;
 }
 
 ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 20px;
-    overflow: hidden;
-    background-color: #333;
+  list-style-type: none;
+  margin: 0;
+  padding: 20px;
+  overflow: hidden;
+  background-color: #333;
 }
 
 li {
-    float: left;
-    color: white;
-    padding: 5px;
+  float: left;
+  color: white;
+  padding: 5px;
+}
+
+h2{
+  text-align: left;
+}
+
+h3 {
+  text-align: left;
+}
+
+img {
+  width: 75%;
+  height: 75%;
+}
+
+div {
+  text-align: center;
 }
