@@ -17,6 +17,8 @@ var getQuests = function() {
 
 var buildNavBar = function() {
   var $ul = $('<ul>');
+  var $liTitle = $('<li>');
+  $liTitle.text("Quest Tracker");
   var $liCreate = $('<li>');
   $liCreate.text("Add A New Quest");
 
@@ -24,7 +26,7 @@ var buildNavBar = function() {
     createQuest();
   })
 
-  $ul.append($liCreate);
+  $ul.append($liTitle, $liCreate);
   $('#nav-bar').append($ul);
 }
 
@@ -44,13 +46,15 @@ var buildTable = function(data) {
   var $thLand = $('<th>');
   $thLand.text("Land Where Encountered");
   var $thTale = $('<th>');
-  $thTale.text("Recount This Tale");
+  $thTale.text("Recount This Adventure");
   var $thGold = $('<th>');
   $thGold.text("Gold Obtained");
+  var $thEdit = $('<th>');
+  $thEdit.text("Revise This Tale");
   var $thDelete = $('<th>');
   $thDelete.text("Purge This Conquest");
 
-  $headRow.append($thFoe, $thLand, $thTale, $thGold, $thDelete);
+  $headRow.append($thFoe, $thLand, $thTale, $thGold, $thEdit, $thDelete);
   $thead.append($headRow);
   $table.append($thead);
 
@@ -80,6 +84,15 @@ var buildTable = function(data) {
         $tr.append($tdGold);
       }
     }
+    var $tdEdit = $('<td>');
+    $tdEdit.text("Revise");
+
+    $tdEdit.click(function(e) {
+      console.log("Edit Clicked For Quest " + quest.id);
+      editQuest(quest);
+    })
+
+
     // Create Delete Button For Each Quest
     var $tdDelete = $('<td>');
     $tdDelete.text("Purge");
@@ -89,7 +102,7 @@ var buildTable = function(data) {
       deleteQuest(quest);
     })
 
-    $tr.append($tdDelete);
+    $tr.append($tdEdit, $tdDelete);
     $tbody.append($tr);
   })
   $table.append($tbody);
@@ -147,14 +160,68 @@ var createQuest = function() {
   $submit.click(function(e) {
     e.preventDefault();
 
-    var quest = {
+    var newQuest = {
       foe : $foe.val(),
       land : $land.val(),
       tale : $tale.val(),
       gold : $gold.val()
       };
 
-    persistQuest(quest);    
+    persistQuest(newQuest);
+  })
+
+  $form.append($foe, $land, $tale, $gold, $br, $br1, $submit);
+
+  $('#quest-form').append($h2);
+  $('#quest-form').append($form);
+}
+
+// Edit A Quest
+var editQuest = function(quest) {
+  $('#nav-bar').empty();
+  $('#data-table').empty();
+  $('#quest-form').empty();
+
+  buildNavBar();
+
+  var $h2 = $('<h2>');
+  $h2.text("Revise This Latest Quest");
+
+  var $form = $('<form>');
+  var $foe = $('<input>');
+  $foe.attr("type", "text");
+  $foe.attr("value", quest.foe);
+
+  var $land = $('<input>');
+  $land.attr("type", "text");
+  $land.attr("value", quest.land);
+
+  var $tale = $('<input>');
+  $tale.attr("type", "text");
+  $tale.attr("value", quest.tale);
+
+  var $gold = $('<input>');
+  $gold.attr("type", "text");
+  $gold.attr("value", quest.gold);
+
+  var $br = $('<br>');
+  var $br1 = $('<br>');
+
+  var $submit = $('<input>');
+  $submit.attr("type", "submit");
+  $submit.attr("value", "Log This Quest")
+
+  $submit.click(function(e) {
+    e.preventDefault();
+
+    var reviseQuest = {
+      foe : $foe.val(),
+      land : $land.val(),
+      tale : $tale.val(),
+      gold : $gold.val()
+      };
+
+    updateQuest(reviseQuest, quest.id);
   })
 
   $form.append($foe, $land, $tale, $gold, $br, $br1, $submit);
@@ -164,8 +231,8 @@ var createQuest = function() {
 }
 
 // Add Quest to Database
-var persistQuest = function(quest) {
-  var questString = JSON.stringify(quest);
+var persistQuest = function(newQuest) {
+  var questString = JSON.stringify(newQuest);
 
   $.ajax({
     type: "POST",
@@ -180,12 +247,12 @@ var persistQuest = function(quest) {
 }
 
 // Update Quest in Database
-var updateQuest = function(quest) {
-  var questString = JSON.stringify(quest);
+var updateQuest = function(reviseQuest, id) {
+  var questString = JSON.stringify(reviseQuest);
 
   $.ajax({
     type: "PUT",
-    url: "api/quest" + quest.id,
+    url: "api/quest/" + id,
     contentType: "application/json",
     data: questString,
     success: getQuests
