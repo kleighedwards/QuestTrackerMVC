@@ -48,7 +48,7 @@ public class QuestDAO {
 		// Set New Foe
 		editQuest.setFoe(quest.getFoe());
 		// Set New Land
-		editQuest.setFoe(quest.getLand());
+		editQuest.setLand(quest.getLand());
 		// Set New Gold Amount
 		editQuest.setGold(quest.getGold());
 		// Set New Tale

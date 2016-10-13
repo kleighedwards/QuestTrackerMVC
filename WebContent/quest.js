@@ -38,6 +38,9 @@ var buildTable = function(data) {
 
   buildNavBar();
 
+  var $h3 = $('<h3>');
+  var totalGold = 0;
+
   var $table = $('<table>');
   var $thead = $('<thead>');
   var $headRow = $('<tr>');
@@ -81,6 +84,7 @@ var buildTable = function(data) {
       if (variable === "gold") {
         var $tdGold = $('<td>');
         $tdGold.text(quest[variable]);
+        totalGold += quest[variable];
         $tr.append($tdGold);
       }
     }
@@ -106,7 +110,9 @@ var buildTable = function(data) {
     $tbody.append($tr);
   })
   $table.append($tbody);
-  $('#data-table').append($table);
+  $h3.text("Your Total Riches: " + totalGold);
+
+  $('#data-table').append($h3, $table);
 };
 
 // Delete A Quest
@@ -190,18 +196,22 @@ var editQuest = function(quest) {
   var $form = $('<form>');
   var $foe = $('<input>');
   $foe.attr("type", "text");
+  $foe.attr("placeholder", "Foe Encountered");
   $foe.attr("value", quest.foe);
 
   var $land = $('<input>');
   $land.attr("type", "text");
+  $land.attr("placeholder", "Land Traveled To");
   $land.attr("value", quest.land);
 
   var $tale = $('<input>');
   $tale.attr("type", "text");
+  $tale.attr("placeholder", "Log Your Tale");
   $tale.attr("value", quest.tale);
 
   var $gold = $('<input>');
   $gold.attr("type", "text");
+  $gold.attr("placeholder", "Riches Earned");
   $gold.attr("value", quest.gold);
 
   var $br = $('<br>');
