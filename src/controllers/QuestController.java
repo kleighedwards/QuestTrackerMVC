@@ -51,9 +51,14 @@ public class QuestController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		response.setStatus(201);
-		questDAO.create(newQuest);
+		System.out.println(newQuest);
+		if (newQuest == null ) {
+			response.setStatus(400);
+		}
+		else {
+			response.setStatus(201);
+			questDAO.create(newQuest);
+		}
 	}
 
 	// Edit A Conquest

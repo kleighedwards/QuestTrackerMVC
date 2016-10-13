@@ -15,19 +15,6 @@ var getQuests = function() {
   });
 }
 
-// Gets Quest By ID and Show Additional Info
-// var getQuestByID = function(id) {
-//   $.ajax({
-//     type: "GET",
-//     url: "api/quest/" + id,
-//     dataType: "json",
-//     success: buildTable
-//   }).fail(function(e){
-//     console.log(e);
-//     console.log("Get Quest By ID Failed!");
-//   });
-// }
-
 var buildNavBar = function() {
   var $ul = $('<ul>');
   var $liTitle = $('<li>');
@@ -51,24 +38,42 @@ var buildTable = function(data) {
   //Empty Divs
   $('#nav-bar').empty();
   $('#data-table').empty();
+  $('#image').empty();
   $('#quest-form').empty();
 
   buildNavBar();
 
   var $h3 = $('<h3>');
+  $h3.attr("id", "totals");
+
   var totalGold = 0;
+  var foesDefeated = 0;
+  var locationArr = [];
+  var locationsTraveled = 0;
 
   var $table = $('<table>');
   var $thead = $('<thead>');
   var $headRow = $('<tr>');
   var $thFoe = $('<th>');
   $thFoe.text("Foe Defeated");
+  $thFoe.click(function(e) {
+    $('#totals').text("Foes Defeated: " + foesDefeated);
+  })
+
   var $thLand = $('<th>');
   $thLand.text("Land Where Encountered");
+  $thLand.click(function(e) {
+    $('#totals').text("Lands Traveled To: " + locationsTraveled);
+  })
+
   var $thTale = $('<th>');
   $thTale.text("Recount This Adventure");
   var $thGold = $('<th>');
   $thGold.text("Gold Obtained");
+  $thGold.click(function(e) {
+    $('#totals').text("Your Total Riches: " + totalGold);
+  })
+
   var $thEdit = $('<th>');
   $thEdit.text("Revise This Tale");
   var $thDelete = $('<th>');
@@ -86,6 +91,7 @@ var buildTable = function(data) {
       if (variable === "foe") {
         var $tdFoe = $('<td>');
         $tdFoe.text(quest[variable]);
+        foesDefeated++;
         $tdFoe.click(function(e) {
           console.log("Show Quest Clicked For: " + quest.id);
           showQuest(quest);
@@ -96,6 +102,12 @@ var buildTable = function(data) {
       if (variable === "land") {
         var $tdLand = $('<td>');
         $tdLand.text(quest[variable]);
+
+        if(jQuery.inArray(quest[variable], locationArr) === -1) {
+          locationsTraveled++;
+          locationArr.push(quest[variable]);
+        }
+
         $tr.append($tdLand);
       }
       if (variable === "tale") {
@@ -107,6 +119,7 @@ var buildTable = function(data) {
         var $tdGold = $('<td>');
         $tdGold.text(quest[variable]);
         totalGold += quest[variable];
+
         $tr.append($tdGold);
       }
     }
@@ -118,7 +131,6 @@ var buildTable = function(data) {
       console.log("Edit Clicked For Quest " + quest.id);
       editQuest(quest);
     })
-
 
     // Create Delete Button For Each Quest
     var $tdDelete = $('<td>');
@@ -155,6 +167,7 @@ var deleteQuest = function(quest) {
 var showQuest = function(quest) {
   $('#nav-bar').empty();
   $('#data-table').empty();
+  $('#image').empty();
   $('#quest-form').empty();
 
   buildNavBar();
@@ -168,13 +181,26 @@ var showQuest = function(quest) {
   var $p = $('<p>');
   $p.text(quest.tale);
 
-  $('#data-table').append($h2, $image, $p);
+  var $ul = $('<ul>');
+  $ul.text("Spoils")
+
+  quest.loot.forEach(function(value, index, array) {
+    var $li = $('<li>');
+    console.log(value);
+    $li.text(value.name);
+    $ul.append($li);
+  })
+
+  $('#data-table').append($h2);
+  $('#image').append($image);
+  $('#quest-form').append($p, $ul);
 }
 
 // Create A Quest
 var createQuest = function() {
   $('#nav-bar').empty();
   $('#data-table').empty();
+  $('#image').empty();
   $('#quest-form').empty();
 
   buildNavBar();
@@ -199,6 +225,14 @@ var createQuest = function() {
   $gold.attr("type", "text");
   $gold.attr("placeholder", "Riches Earned");
 
+  var $foeImage = $('<input>');
+  $foeImage.attr("type", "text");
+  $foeImage.attr("placeholder", "Portrait Of The Defeated");
+
+  var $loot = $('<input>');
+  $loot.attr("type", "text");
+  $loot.attr("placeholder", "Loot Obtained");
+
   var $br = $('<br>');
   var $br1 = $('<br>');
 
@@ -213,13 +247,17 @@ var createQuest = function() {
       foe : $foe.val(),
       land : $land.val(),
       tale : $tale.val(),
-      gold : $gold.val()
+      gold : $gold.val(),
+      image : $foeImage.val(),
+      loot : [{
+          name : $loot.val()
+        }]
       };
 
     persistQuest(newQuest);
   })
 
-  $form.append($foe, $land, $tale, $gold, $br, $br1, $submit);
+  $form.append($foe, $land, $tale, $gold, $foeImage, $loot, $br, $br1, $submit);
 
   $('#quest-form').append($h2);
   $('#quest-form').append($form);
@@ -229,6 +267,7 @@ var createQuest = function() {
 var editQuest = function(quest) {
   $('#nav-bar').empty();
   $('#data-table').empty();
+  $('#image').empty();
   $('#quest-form').empty();
 
   buildNavBar();
