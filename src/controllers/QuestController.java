@@ -72,7 +72,7 @@ public class QuestController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		System.out.println(editQuest);
 		editQuest = questDAO.update(id, editQuest);
 	}
 
