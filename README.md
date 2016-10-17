@@ -33,7 +33,7 @@ adventure. They will then be shown a form with all of the quest's data pre fille
 - If at any point the user wishes to return to their list of quests, they can select the "Quest Tracker" option in
 the nav-bar.
   
- ### Stumbling Blocks
+### Stumbling Blocks
  - CSS remains one of my biggest stumbling blocks. While the program looks presentable, I wish I was able to do
  more with the styling to make it look more professional.
  
