@@ -1,8 +1,9 @@
 body {
   font-family: sans-serif;
-  background-color: #9aadab;
-  /*background-color: #f5c98a;*/
+  background-color: #b6b6b6;
   background-image: url("http://imgsplanet.com/pics/main/34/329156-marble.jpg");
+  background-image: linear-gradient(to bottom, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 100%),
+    url("http://imgsplanet.com/pics/main/34/329156-marble.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -13,17 +14,18 @@ table {
   background: rgba(0, 0, 0, 0.5);
   color: #fff;
   font-size: 16px;
+  padding-top: 3%;
 }
 
 th, td {
   border-bottom: 1px solid #ddd;
-  padding: 10px;
+  padding: 13px;
+  text-align: center;
 }
 
 #nav-bar ul {
   list-style-type: none;
   margin: 0;
-  padding: 15px;
   overflow: hidden;
   background-color: #333;
 }
@@ -31,31 +33,25 @@ th, td {
 #nav-bar li {
   float: left;
   color: white;
-  padding: 5px;
+  padding: 15px;
   padding-right: 25px;
   font-size: 18px;
 }
 
-ul {
-  text-align: left;
-  list-style-type: none;
-  padding-left: : 40px;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-li {
-  padding-top: 5px;
-  font-size: 14px;
-  font-weight: normal;
+.clickable:hover {
+  background-color: #0a0a0a;
 }
 
 h2{
   text-align: left;
+  padding-left: 3%;
+  padding-bottom: 2%;
 }
 
 h3 {
   text-align: left;
+  padding-left: 3%;
+  padding-bottom: 2%;
 }
 
 img {
@@ -70,16 +66,20 @@ div {
 }
 
 #image {
-  height: 85%;
-  width: 85%;
+  height: 75%;
+  width: 75%;
   text-align: center;
-  margin: auto;
+  margin-right: auto;
+  margin-left: auto;
   overflow: hidden;
 }
 
-p {
-  font-size: 20px;
+#quest-form p {
+  font-size: 22px;
   padding-top: 10px;
+  padding-left: 3%;
+  padding-right: 3%;
+  text-align: center;
 }
 
 form {

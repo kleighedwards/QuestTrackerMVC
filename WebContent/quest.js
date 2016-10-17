@@ -19,12 +19,15 @@ var buildNavBar = function() {
   var $ul = $('<ul>');
   var $liTitle = $('<li>');
   $liTitle.text("Quest Tracker");
+  $liTitle.attr("class", "clickable");
+
   $liTitle.click(function(e) {
     getQuests();
   })
 
   var $liCreate = $('<li>');
   $liCreate.text("Add A New Quest");
+  $liCreate.attr("class", "clickable");
 
   $liCreate.click(function(e) {
     createQuest();
@@ -56,12 +59,14 @@ var buildTable = function(data) {
   var $headRow = $('<tr>');
   var $thFoe = $('<th>');
   $thFoe.text("Foe Defeated");
+  $thFoe.attr("class", "clickable");
   $thFoe.click(function(e) {
     $('#totals').text("Foes Defeated: " + foesDefeated);
   })
 
   var $thLand = $('<th>');
   $thLand.text("Land Where Encountered");
+  $thLand.attr("class", "clickable");
   $thLand.click(function(e) {
     $('#totals').text("Lands Traveled To: " + locationsTraveled);
   })
@@ -70,6 +75,7 @@ var buildTable = function(data) {
   $thLoot.text("Loot Obtained");
   var $thGold = $('<th>');
   $thGold.text("Gold Obtained");
+  $thGold.attr("class", "clickable");
   $thGold.click(function(e) {
     $('#totals').text("Your Total Riches: " + totalGold);
   })
@@ -91,6 +97,7 @@ var buildTable = function(data) {
       if (variable === "foe") {
         var $tdFoe = $('<td>');
         $tdFoe.text(quest[variable]);
+        $tdFoe.attr("class", "clickable");
         foesDefeated++;
         $tdFoe.click(function(e) {
           console.log("Show Quest Clicked For: " + quest.id);
@@ -104,6 +111,7 @@ var buildTable = function(data) {
         for (var item in land) {
           if (item === "name") {
             $tdLand.text(land[item]);
+            $tdLand.attr("class", "clickable");
 
             $tdLand.click(function(e) {
               showLand(land);
@@ -142,6 +150,7 @@ var buildTable = function(data) {
     // Create Edit Button For Each Quest
     var $tdEdit = $('<td>');
     $tdEdit.text("Revise");
+    $tdEdit.attr("class", "clickable");
 
     $tdEdit.click(function(e) {
       console.log("Edit Clicked For Quest " + quest.id);
@@ -151,6 +160,7 @@ var buildTable = function(data) {
     // Create Delete Button For Each Quest
     var $tdDelete = $('<td>');
     $tdDelete.text("Purge");
+    $tdDelete.attr("class", "clickable");
 
     $tdDelete.click(function(e) {
       console.log("Delete Clicked For Quest " + quest.id);
@@ -295,7 +305,7 @@ var createQuest = function() {
     }
 
     if ( isNaN($gold.val()) ) {
-      alert("What sort of number be this?");
+      alert("Your gold must be a number, young adventurer!");
     }
 
     else {
