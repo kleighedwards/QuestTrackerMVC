@@ -45,4 +45,4 @@ the nav-bar.
  implement a viewing feature similar to the ones used for Foes and Land.
  
 ### Access on AWS
- - 
+ - http://52.34.37.216:8080/Quest/
