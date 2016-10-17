@@ -29,6 +29,8 @@ adventure. They will then be shown a form with all of the quest's data pre fille
   - Finally, they may enter the land they traveled to. If the land is one the user has already traveled to, the program
   will fill in any missing data with what has already been stored in the database. If the user wishes to revise this data,
   they may do so and these changed will persist for all quests in that particular land.
+  - If no images are entered (and the user has not been to this location previously), default images will be chosen 
+  for them.
 
 - If at any point the user wishes to return to their list of quests, they can select the "Quest Tracker" option in
 the nav-bar.
